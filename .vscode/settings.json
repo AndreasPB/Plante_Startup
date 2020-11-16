@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/78b4dcae-2224-4e3d-a926-7e33ac5b4dd4/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/PlanteStartup",
+  "appService.deploySubpath": "."
+}

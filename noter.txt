@@ -1,0 +1,24 @@
+Ønsker fra project-owner:
+
+Idéer:
+En tråd for brugere - Snak om varene
+Admin konto(forskellige brugerniveauer)
+
+
+
+TODO:
+- Integrere sessions til bruger data / indkøbskurv
+- Integrere mongoDB til brugere
+- Integrere auth til login
+- Bootstrap!
+- Host siden (Heroku?)
+
+
+Brugte tools:
+Node, Express, Express-Session, Nodemon, Dotenv, ESLint, MongoDB(Mongoose), Cors
+
+
+Mål:
+At lave min obligatoriske opgave med mulighed for at bruge det som eksamensprojekt
+
+Obligatorisk 2 https://docs.google.com/document/d/1zAuLb4vyhOm5CY9XRuP3ZOGbn5WWtcYfcSZ5BQScOg4/edit
