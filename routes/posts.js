@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     const savedPost = await post.save();
     console.log(savedPost);
     // res.json({ message: 'post successfully added!' }, savedPost);
-    // res.redirect
+    res.redirect('/');
   } catch (error) {
     res.json({ message: error });
   }
