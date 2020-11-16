@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'plantestartup'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_9130b2dfaf2d4cb8bb154725a6afed21 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_ea49b2be0f474418b9b94b0c1bf1c9a5 }}
         package: .
