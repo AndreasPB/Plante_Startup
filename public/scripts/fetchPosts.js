@@ -3,7 +3,7 @@
 /* eslint-disable no-undef */
 $(document).ready(() => {
   $('#button').click(() => {
-    fetch('http://localhost:8080/posts')
+    fetch('https://plantestartup.azurewebsites.net/posts')
       .then((result) => result.json())
       .then((data) => {
         const columnAmount = $('#columns_dropdown').val();
