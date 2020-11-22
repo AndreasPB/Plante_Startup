@@ -9,8 +9,8 @@ const app = express();
 
 // Import Routes
 const postsRoute = require('./routes/posts');
-// const usersRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const adminRoute = require('./routes/admin');
 
 dotenv.config();
 
@@ -34,6 +34,7 @@ app.use(cors());
 // Route Middelwares
 app.use('/posts', postsRoute);
 app.use('/api/user', authRoute);
+app.use('/api/admin', adminRoute);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/fragments/header.html')
@@ -45,9 +46,11 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, './public/login.html'));
 });
 
+/*
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, './public/admin.html'));
 });
+*/
 
 app.listen(PORT, (error) => {
   if (error) {
