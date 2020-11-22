@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const UserSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   username: {
     type: String,
+    min: 6,
     max: 25,
     unique: true,
     required: true,
@@ -11,12 +12,13 @@ const UserSchema = mongoose.Schema({
   password: {
     type: String,
     min: [6, 'Password is less than 6 characters! Please enter more secure one'],
-    max: 25,
+    max: 1024,
     required: true,
   },
   email: {
     type: String,
-    max: 50,
+    min: 6,
+    max: 255,
     unique: true,
     required: true,
     validate(value) {
@@ -29,4 +31,4 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Users', UserSchema);
+module.exports = mongoose.model('User', userSchema);

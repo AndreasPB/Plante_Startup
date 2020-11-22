@@ -5,10 +5,25 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
 
+const app = express();
+
+// Import Routes
+const postsRoute = require('./routes/posts');
+// const usersRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
+
 dotenv.config();
 
 const PORT = process.env.PORT || 8080;
-const app = express();
+
+// Connect to DB
+mongoose.connect(process.env.DB_CONNECT, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+}, () => {
+  console.log('Connected to DB!');
+});
 
 // Middlewares
 app.use(express.static('public'));
@@ -16,14 +31,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-// Import Routes
-const postsRoute = require('./routes/posts');
-// const usersRoute = require('./routes/users');
-const authRoute = require('./routes/auth');
-
 // Route Middelwares
 app.use('/posts', postsRoute);
-// app.use('/users', usersRoute);
 app.use('/api/user', authRoute);
 
 app.get('/', (req, res) => {
@@ -38,14 +47,6 @@ app.get('/login', (req, res) => {
 
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, './public/admin.html'));
-});
-
-// Connect to DB
-mongoose.connect(process.env.DB_CONNECT, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}, () => {
-  console.log('Connected to DB!');
 });
 
 app.listen(PORT, (error) => {
