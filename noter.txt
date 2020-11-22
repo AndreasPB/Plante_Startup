@@ -4,16 +4,16 @@ Idéer:
 En tråd for brugere - Snak om varene
 Admin konto(forskellige brugerniveauer)
 
-TODO:
+TODO - Backend:
 jwt? DONE - Integrere sessions til bruger data / indkøbskurv
 DONE - Integrere mongoDB til brugere
 DONE - Integrere auth til login
 DONE - Host siden (Heroku?) - Blev Azure
 
 TODO - Frontend:
-- Login page
+DONE - Login page
 - Admin portal / Privat data
-- Bootstrap!
+DONE - Bootstrap!
 
 Mål:
 At lave min obligatoriske opgave med mulighed for at bruge det som eksamensprojekt

@@ -8,7 +8,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const Post = require('../models/post');
+const Post = require('../models/Post');
 
 // GETS ALL THE POSTS
 router.get('/', async (req, res) => {

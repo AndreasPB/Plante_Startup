@@ -1,0 +1,18 @@
+GET https://plantestartup.azurewebsites.net/posts
+
+###
+POST http://localhost:8080/api/user/login
+Content-Type: application/json
+
+{
+  "email": "andreas@mail.com",
+  "password": "password123"
+}
+
+###
+GET http://localhost:8080/api/admin
+Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJhNTg5ZWQ1ZGQ4NjJmODRlODNlZTkiLCJpYXQiOjE2MDYwNjU1MTZ9.W-J3yIbceym5TVQSBzUr_3cxfzE0Yb3QO4dkUxrZaoU
+
+###
+GET http://localhost:8080/api/admin/secret
+Auth-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmJhNTg5ZWQ1ZGQ4NjJmODRlODNlZTkiLCJpYXQiOjE2MDYwNjU1MTZ9.W-J3yIbceym5TVQSBzUr_3cxfzE0Yb3QO4dkUxrZaoU
