@@ -1,8 +1,18 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../validation');
+const rateLimit = require("express-rate-limit");
+const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer")
+// const bodyParser = require('body-parser');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 15, // limit each IP to 100 requests per windowMs
+});
+
+router.use("/login", limiter);
 
 router.post('/register', async (req, res) => {
   // Validating the data before we get an user
@@ -24,9 +34,35 @@ router.post('/register', async (req, res) => {
     email: req.body.email,
   });
   try {
-    // const savedUser = await user.save();
     await user.save();
-    res.send({ user: user._id });
+
+    const email = req.body.email;
+
+    // MAILER
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS,
+      },
+    });
+
+
+    const message = {
+      from: 'Plante Startup <foo@example.com>', // sender address
+      to: `${email}`,
+      subject: "Plante Startup Account",
+      text: "Your new account has been created!",
+  };
+
+    let info = await transporter.sendMail(message);
+
+    console.log("Message sent: %s", info.messageId);
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+    res.redirect('/login');
   } catch (err) {
     res.status(400).send(err);
   }
@@ -45,10 +81,18 @@ router.post('/login', async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) return res.status(400).send('Invalid password');
 
-  // Create and assign json web token
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  req.session.isAuth = true;
+  console.log(`User ${ user.username } has logged in`);
+  res.status(200).redirect('/')
+});
 
-  res.header('Auth-Token', token).send(token);
+// LOGOUT
+router.post('/logout', async (req, res) => {
+  req.session.destroy((error) => {
+    if(error) throw error;
+    console.log(`User ${ user.username } has logged out`);
+    res.redirect('/');
+  })
 });
 
 module.exports = router;

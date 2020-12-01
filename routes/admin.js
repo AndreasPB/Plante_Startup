@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const verify = require('./verifyToken');
+const verify = require('./verifyAuth');
 
 const User = require('../models/User');
 
@@ -11,6 +11,7 @@ router.get('/', verify, (req, res) => {
 router.get('/secret', verify, async (req, res) => {
   try {
     const users = await User.find();
+    console.log(users);
     res.json(users);
   } catch (error) {
     res.json({ message: error });

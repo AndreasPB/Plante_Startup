@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const session = require('express-session');
+const MongoDBSession = require('connect-mongodb-session')(session);
 
 const app = express();
 
@@ -22,14 +24,26 @@ mongoose.connect(process.env.DB_CONNECT, {
   useUnifiedTopology: true,
   useCreateIndex: true,
 }, () => {
-  console.log('Connected to DB!');
+  console.log('Connected to MongoDB!');
 });
+
+const store = new MongoDBSession({
+  uri: process.env.DB_CONNECT,
+  collection: 'mySessions',
+})
 
 // Middlewares
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+
+app.use(session({
+  secret: process.env.TOKEN_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+}));
 
 // Route Middelwares
 app.use('/', viewRoute);

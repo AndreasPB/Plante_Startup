@@ -5,68 +5,66 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 
 const app = express();
-const verify = require('./verifyAuth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const Post = require('../models/Post');
+const user = require('../models/User');
 
-// GETS ALL THE POSTS
+// GETS ALL THE USERS
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find();
-    res.json(posts);
+    const users = await user.find();
+    res.json(users);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// SUBMITS A POST
-router.post('/', async (req, res) => {
+// SUBMITS A USER
+router.user('/', async (req, res) => {
   console.log('test', req.body);
-  const post = new Post({
-    title: req.body.title,
-    description: req.body.description,
+  const user = new user({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
   });
 
   try {
-    const savedPost = await post.save();
-    console.log(savedPost);
-    // res.json({ message: 'post successfully added!' }, savedPost);
+    const saveduser = await user.save();
     res.redirect('/');
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// SPECIFIC POST
+// SPECIFIC USER
 router.get('/:id', async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
-    res.json(post);
+    const user = await user.findById(req.params.id);
+    res.json(user);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// DELETE POST
+// DELETE USER
 router.delete('/id', async (req, res) => {
   try {
-    const removedPost = await Post.remove({ _id: req.params.id });
-    res.json(removedPost);
+    const removedUser = await user.remove({ _id: req.params.id });
+    res.json(removedUser);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// UPDATE A POST
+// UPDATE A USER
 router.patch('/id', async (req, res) => {
   try {
-    const updatedPost = await Post.updateOne(
+    const updatedUser = await user.updateOne(
       { _id: req.params.id },
-      { $set: { title: req.body.title } },
+      { $set: { username: req.body.username } },
     );
-    res.json(updatedPost);
+    res.json(updatedUser);
   } catch (error) {
     res.json({ message: error });
   }

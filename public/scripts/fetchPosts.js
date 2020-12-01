@@ -4,6 +4,7 @@
 $(document).ready(() => {
   $('#button').click(() => {
     fetch('https://plantestartup.azurewebsites.net/api/posts')
+    //fetch('http://localhost:8080/api/posts')
       .then((result) => result.json())
       .then((data) => {
         const columnAmount = $('#columns_dropdown').val();

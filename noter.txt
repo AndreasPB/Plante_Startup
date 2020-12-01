@@ -5,10 +5,13 @@ En tråd for brugere - Snak om varene
 Admin konto(forskellige brugerniveauer)
 
 TODO - Backend:
-jwt? DONE - Integrere sessions til bruger data / indkøbskurv
+DONE med sessions jwt? DONE - Integrere sessions til bruger data / indkøbskurv
 DONE - Integrere mongoDB til brugere
 DONE - Integrere auth til login
 DONE - Host siden (Heroku?) - Blev Azure
+DONE - cookies:
+    Hvis token -> direkte admin adgang
+    Hvis ingen token -> login
 
 TODO - Frontend:
 DONE - Login page
