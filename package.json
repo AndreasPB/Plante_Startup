@@ -24,6 +24,7 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.10.13",
     "nodemailer": "^6.4.16",
+    "socket.io": "^3.0.3",
     "validator": "^13.1.17"
   },
   "devDependencies": {

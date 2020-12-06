@@ -4,8 +4,6 @@ const User = require('../models/User');
 const { registerValidation, loginValidation } = require('../validation');
 const rateLimit = require("express-rate-limit");
 const nodemailer = require("nodemailer");
-// const nodemailer = require("nodemailer")
-// const bodyParser = require('body-parser');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -82,8 +80,9 @@ router.post('/login', async (req, res) => {
   if (!validPass) return res.status(400).send('Invalid password');
 
   req.session.isAuth = true;
+  req.session.username = user.username;
   console.log(`User ${ user.username } has logged in`);
-  res.status(200).redirect('/')
+  res.status(200).redirect('/');
 });
 
 // LOGOUT

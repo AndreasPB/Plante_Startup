@@ -7,8 +7,10 @@ const session = require('express-session');
 const MongoDBSession = require('connect-mongodb-session')(session);
 
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 // Import Routes
 const postsRoute = require('./routes/posts');
@@ -32,6 +34,23 @@ const store = new MongoDBSession({
   collection: 'mySessions',
 })
 
+// Sockets
+const users = {}
+
+io.on('connection', socket => {
+  socket.on('new-user', name => {
+    users[socket.id] = name
+    socket.broadcast.emit('user-connected', name)
+  })
+  socket.on('send-chat-message', message => {
+    socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
+  })
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('user-disconnected', users[socket.id])
+    delete users[socket.id]
+  })
+});
+
 // Middlewares
 app.use(express.static('public'));
 app.use(bodyParser.json());
@@ -51,7 +70,7 @@ app.use('/api/posts', postsRoute);
 app.use('/api/user', authRoute);
 app.use('/api/admin', adminRoute);
 
-app.listen(PORT, (error) => {
+http.listen(PORT, (error) => {
   if (error) {
     console.log(`Server start on port ${PORT} failed!`);
     console.log(error);
