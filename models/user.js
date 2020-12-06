@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
   username: {
@@ -41,7 +41,7 @@ const userSchema = mongoose.Schema({
   uuid: {
     type: String,
     required: false,
-  }
+  },
 });
 
 userSchema.methods.createJWT = async function () {

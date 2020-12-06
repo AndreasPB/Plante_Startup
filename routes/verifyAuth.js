@@ -5,7 +5,6 @@ const app = express();
 app.use(cookieParser());
 
 module.exports = (req, res, next) => {
-
   if (req.session.isAuth) {
     next();
   } else {

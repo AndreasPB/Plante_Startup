@@ -1,16 +1,16 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
+const rateLimit = require('express-rate-limit');
+const nodemailer = require('nodemailer');
 const { registerValidation, loginValidation } = require('../validation');
-const rateLimit = require("express-rate-limit");
-const nodemailer = require("nodemailer");
+const User = require('../models/User');
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 15, // limit each IP to 100 requests per windowMs
 });
 
-router.use("/login", limiter);
+router.use('/login', limiter);
 
 router.post('/register', async (req, res) => {
   // Validating the data before we get an user
@@ -37,28 +37,27 @@ router.post('/register', async (req, res) => {
     const email = req.body.email;
 
     // MAILER
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-          user: process.env.MAIL_USER,
-          pass: process.env.MAIL_PASS,
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
       },
     });
-
 
     const message = {
       from: 'Plante Startup <foo@example.com>', // sender address
       to: `${email}`,
-      subject: "Plante Startup Account",
-      text: "Your new account has been created!",
-  };
+      subject: 'Plante Startup Account',
+      text: 'Your new account has been created!',
+    };
 
-    let info = await transporter.sendMail(message);
+    const info = await transporter.sendMail(message);
 
-    console.log("Message sent: %s", info.messageId);
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    console.log('Message sent: %s', info.messageId);
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
     res.redirect('/login');
   } catch (err) {
@@ -74,24 +73,24 @@ router.post('/login', async (req, res) => {
 
   // Checking if the email exists
   const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Email doesn't exist");
+  if (!user) return res.status(400).send('Email does not exist');
   // Checking if password is correct
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) return res.status(400).send('Invalid password');
 
   req.session.isAuth = true;
-  req.session.username = user.username;
-  console.log(`User ${ user.username } has logged in`);
+  res.cookie('name', user.username, { maxAge: 3600000 });
+  console.log(`User ${user.username} has logged in`);
   res.status(200).redirect('/');
 });
 
 // LOGOUT
 router.post('/logout', async (req, res) => {
   req.session.destroy((error) => {
-    if(error) throw error;
-    console.log(`User ${ user.username } has logged out`);
+    if (error) throw error;
+    console.log(`User ${user.username} has logged out`);
     res.redirect('/');
-  })
+  });
 });
 
 module.exports = router;
