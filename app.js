@@ -62,12 +62,8 @@ app.use('/api/admin', adminRoute);
 
 const users = {};
 
-// io.use(sharedsession(session));
-
 io.on('connection', (socket) => {
   socket.on('new-user', (name) => {
-    // console.log(socket.handshake.session);
-    // const name = name;
     users[socket.id] = name;
     socket.broadcast.emit('user-connected', name);
   });
