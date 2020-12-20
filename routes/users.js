@@ -30,7 +30,7 @@ router.user('/', async (req, res) => {
   });
 
   try {
-    const saveduser = await user.save();
+    const savedUser = await user.save();
     res.redirect('/');
   } catch (error) {
     res.json({ message: error });

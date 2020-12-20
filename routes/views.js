@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const path = require('path');
-const auth = require('./auth');
 const verify = require('./verifyAuth');
 const cookieParser = require('cookie-parser');
 
