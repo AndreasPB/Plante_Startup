@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
       host: 'smtp.ethereal.email',
       port: 587,
-      secure: false, // true for 465, false for other ports
+      secure: false,
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -81,14 +81,15 @@ router.post('/login', async (req, res) => {
   req.session.isAuth = true;
   res.cookie('name', user.username, { maxAge: 3600000 });
   console.log(`User ${user.username} has logged in`);
-  res.status(200).redirect('/');
+  res.status(200).redirect('/admin');
 });
 
 // LOGOUT
 router.post('/logout', async (req, res) => {
+  
   req.session.destroy((error) => {
     if (error) throw error;
-    console.log(`User ${user.username} has logged out`);
+    // console.log(`User ${user.username} has logged out`);
     res.redirect('/');
   });
 });
