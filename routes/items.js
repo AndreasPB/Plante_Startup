@@ -8,64 +8,66 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const PostModel = require('../models/Post');
+const ItemModel = require('../models/Item');
 
-// GETS ALL THE POSTS
+// GETS ALL THE ITEMS
 router.get('/', async (req, res) => {
   try {
-    const posts = await PostModel.find();
-    res.json(posts);
+    const items = await ItemModel.find();
+    res.json(items);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// SUBMITS A POST
+// SUBMITS AN ITEM
 router.post('/', async (req, res) => {
   console.log('test', req.body);
-  const post = new PostModel({
-    title: req.body.title,
+  const item = new ItemModel({
+    name: req.body.name,
+    price: req.body.price,
+    type: req.body.type,
     description: req.body.description,
   });
 
   try {
-    const savedPost = await post.save();
-    console.log(savedPost);
-    // res.json({ message: 'post successfully added!' }, savedPost);
+    const savedItem = await item.save();
+    console.log(savedItem);
+    // res.json({ message: 'item successfully added!' }, saveditem);
     res.redirect('/');
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// SPECIFIC POST
+// SPECIFIC ITEM
 router.get('/:id', async (req, res) => {
   try {
-    const post = await PostModel.findById(req.params.id);
-    res.json(post);
+    const item = await ItemModel.findById(req.params.id);
+    res.json(item);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// DELETE POST
+// DELETE ITEM
 router.delete('/id', async (req, res) => {
   try {
-    const removedPost = await PostModel.remove({ _id: req.params.id });
-    res.json(removedPost);
+    const removeditem = await ItemModel.remove({ _id: req.params.id });
+    res.json(removeditem);
   } catch (error) {
     res.json({ message: error });
   }
 });
 
-// UPDATE A POST
+// UPDATE AN ITEM
 router.patch('/id', async (req, res) => {
   try {
-    const updatedPost = await PostModel.updateOne(
+    const updateditem = await ItemModel.updateOne(
       { _id: req.params.id },
-      { $set: { title: req.body.title } },
+      { $set: { namee: req.body.name } },
     );
-    res.json(updatedPost);
+    res.json(updateditem);
   } catch (error) {
     res.json({ message: error });
   }

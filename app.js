@@ -48,7 +48,9 @@ app.use(cors());
 const postsRoute = require('./routes/posts');
 const authRoute = require('./routes/auth');
 const adminRoute = require('./routes/admin');
+const userRoute = require('./routes/users');
 const viewRoute = require('./routes/views');
+const itemRoute = require('./routes/items');
 const { isError } = require('@hapi/joi');
 
 // Route Middelwares
@@ -56,6 +58,8 @@ app.use('/', viewRoute);
 app.use('/api/posts', postsRoute);
 app.use('/api/user', authRoute);
 app.use('/api/admin', adminRoute);
+app.use('/api/users', userRoute);
+app.use('/api/items', itemRoute);
 
 // Sockets
 // io.use(session);

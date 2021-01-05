@@ -33,9 +33,6 @@
           <li class="nav-item">
               <a class="nav-link" href="/admin">Admin</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/register">Register</a>
-          </li>
         </ul>
         <ul class="navbar-nav ml-auto"> 
           <li class="nav-item" id="logoutButton">
@@ -57,17 +54,50 @@
           <div class="message" id="message-container"></div>
         </div>
         <form class="send-message-form" id="send-container">
-            <input type="text" id="message-input">
+            <input type="text" id="message-input" autofocus="">
             <button type="submit" id="send-button">Send</button>
           </form>
         </form>
       </div>
     </div>
     <div class="col-sm">
+      <!-- USERS -->
       <h2>Users</h2>
-      <a href="/register">Register user</a>
+
+        <table id="data_table" class="table">
+          <thead class="thead-light">
+              <th>Username</th>
+              <th>Email</th>  
+              <th></th>     
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <button id="button">Get Users</button>
+      <label for="columns_dropdown">Select columns</label>
+        <select id="columns_dropdown">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="9999">all</option>
+        </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <a href="/regUser">Register User</a>
+      <br>
+      <a href="/regItem">Register Item</a>
+    </div>
+    <div class="col">
+
     </div>
   </div>
 </div>
+<!-- jQuery and Bootstrap Bundle (includes Popper) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<!-- Custom scripts -->
+<script src="../js/fetchUsers.js"></script>
 </body>
 </html>

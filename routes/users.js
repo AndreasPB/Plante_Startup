@@ -8,12 +8,12 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const user = require('../models/User');
+const UserModel = require('../models/User');
 
 // GETS ALL THE USERS
 router.get('/', async (req, res) => {
   try {
-    const users = await user.find();
+    const users = await UserModel.find();
     res.json(users);
   } catch (error) {
     res.json({ message: error });
@@ -21,16 +21,17 @@ router.get('/', async (req, res) => {
 });
 
 // SUBMITS A USER
-router.user('/', async (req, res) => {
+router.post('/', async (req, res) => {
   console.log('test', req.body);
-  const user = new user({
+  const user = new UserModel({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   });
 
   try {
-    const savedUser = await user.save();
+    const savedUser = await UserModel.save();
+    console.log(`User ${savedUser.username} has been submitted!`);
     res.redirect('/');
   } catch (error) {
     res.json({ message: error });
@@ -40,8 +41,8 @@ router.user('/', async (req, res) => {
 // SPECIFIC USER
 router.get('/:id', async (req, res) => {
   try {
-    const user = await user.findById(req.params.id);
-    res.json(user);
+    const foundUser = await UserModel.findById(req.params.id);
+    res.json(foundUser);
   } catch (error) {
     res.json({ message: error });
   }
@@ -50,7 +51,7 @@ router.get('/:id', async (req, res) => {
 // DELETE USER
 router.delete('/id', async (req, res) => {
   try {
-    const removedUser = await user.remove({ _id: req.params.id });
+    const removedUser = await UserModel.remove({ _id: req.params.id });
     res.json(removedUser);
   } catch (error) {
     res.json({ message: error });
@@ -60,7 +61,7 @@ router.delete('/id', async (req, res) => {
 // UPDATE A USER
 router.patch('/id', async (req, res) => {
   try {
-    const updatedUser = await user.updateOne(
+    const updatedUser = await UserModel.updateOne(
       { _id: req.params.id },
       { $set: { username: req.body.username } },
     );
