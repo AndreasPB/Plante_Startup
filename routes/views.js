@@ -4,7 +4,7 @@ const verify = require('./verifyAuth');
 const cookieParser = require('cookie-parser');
 
 router.get('/', (req, res) => {
-  res.sendFile(path.resolve('public/views/index.html'));
+  res.sendFile(path.resolve('public/views/frontpage.html'));
 });
 
 router.get('/login', (req, res) => {
