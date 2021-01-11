@@ -3,8 +3,8 @@
 /* eslint-disable no-undef */
 $(document).ready(() => {
 // $('#button').click(() => {
-  fetch('https://plantestartup.azurewebsites.net/api/items')
-  // fetch('http://localhost:3000/api/items')
+  // fetch('https://plantestartup.azurewebsites.net/api/items')
+  fetch('http://localhost:3000/api/items')
     .then((result) => result.json())
     .then((data) => {
       const columnAmount = $('#columns_dropdown').val();

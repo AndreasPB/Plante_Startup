@@ -16,7 +16,6 @@ $(document).ready(() => {
           const $tr = $('<tr>').append(
             $('<td>').text(data.username),
             $('<td>').text(data.email),
-            $(`<button value=${data._id}>`).text('Edit'),
           ).appendTo('#data_table', 'tbody');
         });
       });
